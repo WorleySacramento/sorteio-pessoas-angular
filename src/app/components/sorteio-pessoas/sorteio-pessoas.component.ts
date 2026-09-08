@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SorteioService } from 'src/app/services/sorteio.service';
 
 @Component({
   selector: 'app-sorteio-pessoas',
@@ -7,14 +8,16 @@ import { Component } from '@angular/core';
 })
 export class SorteioPessoasComponent {
   texto: string = '';
+  constructor(private sorteioService: SorteioService) {}
 
   sortearPessoas(){
     const nomes: string[] = this.texto.split('\n');
-    if(nomes.length == 0){
-      alert('Digite os nomes para realizar o sorteio');
-      return;
-      }else{
-      const nomeSorteado = Math.floor(Math.random() * nomes.length);
-      alert(`O nome sorteado é: ${nomes[nomeSorteado]}`);}
+    
+    const sorteado = this.sorteioService.sortear(nomes);
+    if (sorteado) {
+      alert(`O nome sorteado é: ${sorteado}`);
+    } else {
+      alert('Nenhum nome foi sorteado.');
+    }
   }
 }
